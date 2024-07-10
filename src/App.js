@@ -1,5 +1,3 @@
-// src/App.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import './App.css';
@@ -11,7 +9,20 @@ function App() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('https://eliandro-yt-backend.netlify.app/.netlify/functions/server/download', { youtubeUrl });
+            const response = await axios.post('https://eliandro-yt-backend.netlify.app/.netlify/functions/server/download', { youtubeUrl }, { responseType: 'blob' });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+
+            // Obter o nome do arquivo do cabeçalho Content-Disposition
+            const contentDisposition = response.headers['content-disposition'];
+            const fileName = contentDisposition.split(';')[1].trim().split('=')[1].replace(/"/g, '');
+
+            link.setAttribute('download', `${fileName}.mp4`);
+            document.body.appendChild(link);
+            link.click();
+
             setMessage('Vídeo baixado com sucesso! Verifique seu navegador para download.');
         } catch (error) {
             setMessage('Erro ao baixar o vídeo.');
