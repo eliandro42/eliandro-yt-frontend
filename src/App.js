@@ -11,7 +11,7 @@ function App() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('/.netlify/functions/download', { youtubeUrl });
+            const response = await axios.post('https://eliandro-yt-backend.netlify.app/.netlify/functions/server/download', { youtubeUrl });
             setMessage('Vídeo baixado com sucesso! Verifique seu navegador para download.');
         } catch (error) {
             setMessage('Erro ao baixar o vídeo.');
