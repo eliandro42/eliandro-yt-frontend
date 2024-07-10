@@ -8,7 +8,7 @@ function App() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('https://eliandro-yt-backend.netlify.app/.netlify/functions/download', { youtubeUrl });
+            const response = await axios.post('https://eliandro-yt-backend.netlify.app/.netlify/functions/server/download', { youtubeUrl });
             setMessage(response.data.message);
         } catch (error) {
             setMessage('Erro ao baixar o vídeo.');
